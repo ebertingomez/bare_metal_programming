@@ -1,26 +1,26 @@
 #Declaration of Variables
 EXE := hello
-OBJS := t1.o t2.o
-FLAGS := -Wall -Werror -g -Og -c -o
-COMMAND := arm-none-eabi-gcc -mthumb
+OBJS := t1.o t2.o main.o stubs.o
+CFLAGS := -Wall -Werror -g -Og
+LDFLAGS := -L/opt/mylibs
+TARGET_ARCH := -mthumb
+LDLIBS := -lm
+CC := arm-none-eabi-gcc
+VPATH = ./libs
 
 all: $(EXE)
 
 #Creation of the EXEC target
-$(EXE): $(OBJS) main.o stubs.o
-	$(COMMAND) -L/opt/mylibs $(OBJS) main.o stubs.o -lm -o $(EXE)
-
-#Creation of the objects which require a header
-$(OBJS): %.o : %.c %.h
-	$(COMMAND) $(FLAGS) $@ $<
-
-#Creation of  main
-main.o: main.c
-	$(COMMAND) $(FLAGS) $@ $<
+$(EXE): $(OBJS) 
+	$(LINK.o) $^ $(LOADLIBES) $(LDLIBS)  -o $@
 
 #Creation of the library stubs
-stubs.o: libs/stubs.c
-	$(COMMAND) -g -O2 -c -o $@ $<
+stubs.o: stubs.c
+	$(CC) -g -O2 $(TARGET_ARCH) -c -o $@ $<
+
+-include $(subst .o,.d, $(SOURCES))
+%.d : %.c
+	$(CC) $(CFLAGS) $(CPPFLAGS) $(TARGET_ARCH) -M -MF $@ -MP $<
 
 #Clean 
 clean:
