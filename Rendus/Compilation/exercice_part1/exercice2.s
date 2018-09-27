@@ -12,3 +12,5 @@ Begin:
  LDR r6, =c
  LDR r7, [r6]
  LDR r8, [r7]
+ ADD r2, r2, r8
+ ADD r5, r5, r8
