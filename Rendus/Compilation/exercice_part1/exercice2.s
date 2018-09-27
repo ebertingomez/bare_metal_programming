@@ -13,4 +13,6 @@ Begin:
  LDR r7, [r6]
  LDR r8, [r7]
  ADD r2, r2, r8
+ STR r2, [r1]
  ADD r5, r5, r8
+ STR r5, [r4]
