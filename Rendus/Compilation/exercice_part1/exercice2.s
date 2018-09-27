@@ -16,3 +16,7 @@ Begin:
  STR r2, [r1]
  ADD r5, r5, r8
  STR r5, [r4]
+
+ // Le compilateur charge deux fois le contenue de *c, car il utilise le registre "ip" pour enregistrer *c au debut. 
+ // Ce registre est temporaire et peut varier au cours de l'execution. Donc il faut le charger de nouveau pour s'assurer
+ // que l'on utilise la bonne valeur
