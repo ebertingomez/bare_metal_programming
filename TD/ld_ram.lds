@@ -1,8 +1,8 @@
 MEMORY
 	{
 	  flash (rx) : ORIGIN = 0x00000000, LENGTH = 1M
-	  sdram1 (!rx) : ORIGIN = 0x20000000, LENGTH = 96K
-	  sdram2 (!rx) : ORIGIN = 0x10000000, LENGTH = 32K
+	  sdram1 (wx) : ORIGIN = 0x20000000, LENGTH = 96K
+	  sdram2 (wx) : ORIGIN = 0x10000000, LENGTH = 32K
 	}
 
 SECTIONS {
@@ -19,7 +19,8 @@ SECTIONS {
 } > sdram1
 		
 	.bss : {
-		*(.bss) *(COMMON)
+		*(.bss)
+		*(COMMON)
 } > sdram1
 }
 
