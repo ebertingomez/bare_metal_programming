@@ -6,20 +6,19 @@ DEVICE = -device STM32L475VG
 DEBUGGER = arm-none-eabi-gdb
 
 CC = arm-none-eabi-gcc
-CFLAGS = -g -O1 
+CFLAGS = -g -O1
 TARGET_ARCH = -mcpu=cortex-m4 -mthumb -mfloat-abi=hard -mfpu=fpv4-sp-d16
 LDFLAGS = -T
 LOADLIBES = ld_ram.lds 
 OBJS = main.o
 EXE = main
-LINK.o = $(CC) $(LDFLAGS) -o $(EXE)
 
 $(EXE) : $(OBJS) $(LOADLIBES)
-
+	$(CC) $(LDFLAGS) $^ -o $(EXE)
 all : $(EXE)
 
 debug :
-	$(TERMINAL) $(DRIVER) $(DEVICE) $(DRIVER_TAGS)
+	-$(DRIVER) $(DEVICE) $(DRIVER_TAGS) &
 	$(DEBUGGER) $(FILE)
 clean:
 	rm -f $(OBJS) $(EXE)
