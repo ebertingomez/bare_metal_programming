@@ -5,23 +5,22 @@ MEMORY
 	  sdram2 (!rx) : ORIGIN = 0x10000000, LENGTH = 32K
 	}
 
-SECTIONS
- 	{
-		.text {
-	  		*(.text)
-		} > sdram1
+SECTIONS {
+	.text : {
+		*(.text)
+} > sdram1
+	 
+	.rodata : {
+		*(.rodata)
+} > sdram1
 		
-		.rodata {
-	  		*(.rodata)
-		} > sdram1
+	.data : {
+	  	*(.data)      
+} > sdram1
 		
-		.data {
-	  		*(.data)      
-		} > sdram1
-		
-		.bss {
-	  		*(.bss) *(COMMON)
-		} > sdram1
- 	}
+	.bss : {
+		*(.bss) *(COMMON)
+} > sdram1
+}
 
 ENTRY(main)
