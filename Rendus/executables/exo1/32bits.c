@@ -2,6 +2,7 @@
 #include <stdio.h>
 int32_t x = 34;
 int32_t y;
+int32_t w;
 const char mesg[] = "Hello World!";
 int main()
 {
