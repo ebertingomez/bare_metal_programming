@@ -43,5 +43,3 @@ On peut donc en conclure l'ordre des différentes sections mappées sur un PC Li
 Puis, on peut remarquer que la pile croît de façon descendante. En effet, les variables "e" et "f" ont été stockées dans la pile l'une après l'autre dans cet ordre. Comme l'adresse de e (**0x7ffd2298b25c**) et plus grande que celle de f (**0x7ffd2298b258**), on en déduit que la pile est en mode descending.
 
 **Note:** On peut assurer que les variables "e" et "f" ont été initialisées dans cet ordre car on n'a  effectué aucune optimisation lors de la compilation (`CFLAGS -O0`)
-
-
