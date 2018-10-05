@@ -22,6 +22,8 @@ SECTIONS {
 		*(.bss)
 		*(COMMON)
 } > sdram1
+start_of_BSS  = ADDR(.bss);
+size_of_BSS = SIZEOF(.bss);
 }
 
 ENTRY(_start)

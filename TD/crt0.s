@@ -3,6 +3,7 @@
 
 _start:
  LDR sp,=0x10001000
+ BL init_bss
  BL main
  BL _end
  
