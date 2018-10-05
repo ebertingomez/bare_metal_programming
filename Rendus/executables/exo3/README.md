@@ -64,4 +64,8 @@ Le fichier `-O2` contient presque les mêmes zones de données que le fichier ob
 
 Le fichier `-Os` contient presque la même structure que le précedent, sauf que sa section read-only permet un aligment **d'un octet** qui permet d'économiser de la place mémoire. On peut trouver ainsi la section `.rodata.srt1.1` au lieu de `.rodata.srt1.4`
 
-## **Question 1**
+## **Question 2**
+Tous les fichiers objets compilés à partir du fichier2 (`static const char mesg[]`) ont presque les mêmes sections que leur équivalent de la question précedente. La seule qui varie est `.rodata`. Pour toutes les optimisations (tous les fichiers sauf `-O0`), le compilateur n'enregistre pas la chaine de caractères `mesg` et garde sa copie partielle qui sera affichée par `puts`. En effet, cette chaîne ne peut être vue que dans le fichier oû elle est déclarée et elle n'est utilisée qu'une seule fois comme input de `puts`. Donc, le compilateur ne l'enregistre pas dans la section `.rodata` afin d'économiser de la place mémoire.
+
+## **Question 3**
+
