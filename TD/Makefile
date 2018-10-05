@@ -8,9 +8,13 @@ DEBUGGER = arm-none-eabi-gdb
 CC = arm-none-eabi-gcc -nostdlib -Wall -Wextra -Werror
 CFLAGS = -g -O1
 TARGET_ARCH = -mcpu=cortex-m4 -mthumb  -mfloat-abi=hard -mfpu=fpv4-sp-d16
+
+AS = arm-none-eabi-as
+ASFLAGS = -mthumb -mcpu=cortex-m4 -mfloat-abi=hard -mfpu=fpv4-sp-d16
+
 LDFLAGS = -T
 LOADLIBES = ld_ram.lds 
-OBJS = main.o
+OBJS = main.o crt0.o
 EXE = main
 
 $(EXE) : $(LOADLIBES) $(OBJS)
@@ -21,7 +25,7 @@ startgdbserver :
 	$(DRIVER) $(DEVICE) $(DRIVER_TAGS)
 
 debug :
-	$(DEBUGGER) $(FILE)
+	$(DEBUGGER) $(EXE)
 
 clean:
 	rm -f $(OBJS) $(EXE)

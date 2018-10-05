@@ -24,4 +24,4 @@ SECTIONS {
 } > sdram1
 }
 
-ENTRY(main)
+ENTRY(_start)
