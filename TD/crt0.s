@@ -2,5 +2,10 @@
 .syntax unified
 
 _start:
- LDR sp,=0x20000000
- B main
+ LDR sp,=0x10001000
+ BL main
+ BL _end
+ 
+_end:
+ BL _end
+ 

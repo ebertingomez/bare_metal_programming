@@ -17,9 +17,10 @@ LOADLIBES = ld_ram.lds
 OBJS = main.o crt0.o
 EXE = main
 
+all : $(EXE)
+
 $(EXE) : $(LOADLIBES) $(OBJS)
 	$(CC) $(LDFLAGS) $^ -o $@
-all : $(EXE)
 
 startgdbserver :
 	$(DRIVER) $(DEVICE) $(DRIVER_TAGS)

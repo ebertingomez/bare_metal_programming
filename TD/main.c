@@ -1,20 +1,18 @@
-int fibo(int);
+int fibo(int i);
 
 int main()
 {
-  for (;;){
-    fibo(3);
-  }
-  
-  return 0;
+  return fibo(8);
 }
 
 int fibo(int i)
 {
-  if (i == 1 || 1 == 2){
+  if (i == 1 || i == 2)
+  {
     return 1;
   }
-  else {
-    return fibo(i-2) + fibo(i-1);
+  else
+  {
+    return fibo(i - 2) + fibo(i - 1);
   }
 }
