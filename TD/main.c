@@ -1,9 +1,11 @@
 int fibo(int i);
 
-
+int global;
+int zero = 0;
 int main()
 {
-  return fibo(8);
+  fibo(8);
+  return global;
 }
 
 int fibo(int i)

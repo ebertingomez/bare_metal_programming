@@ -1,5 +1,3 @@
-TERMINAL = gnome-terminal --
-
 DRIVER = JLinkGDBServer  
 DRIVER_TAGS = -endian little -if SWD -speed auto -ir -LocalhostOnly
 DEVICE = -device STM32L475VG
@@ -14,10 +12,11 @@ ASFLAGS = -mthumb -mcpu=cortex-m4 -mfloat-abi=hard -mfpu=fpv4-sp-d16
 
 LDFLAGS = -T
 LOADLIBES = ld_ram.lds 
+
 OBJS = main.o crt0.o init.o
 EXE = main
 
-all : $(EXE)
+all : $(EXE) 
 
 $(EXE) : $(LOADLIBES) $(OBJS)
 	$(CC) $(LDFLAGS) $^ -o $@
