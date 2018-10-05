@@ -18,5 +18,6 @@ stubs.o: stubs.c
 
 clean:
 	rm -f $(OBJS)
+	rm -f file*.o*
 
 .PHONY: all clean
