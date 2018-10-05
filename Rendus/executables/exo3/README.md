@@ -7,6 +7,7 @@ Commandes utilisées : `objdump -h`
 
 
 **File 1**
+
 |                | taille O0 | taille O1 | taille O2 | taille Os |
 | -------------- | --------- | --------- | --------- | --------- |
 | .text.*        | 000000b8  | 00000074  | 00000074  | 00000070  |
@@ -17,6 +18,7 @@ Commandes utilisées : `objdump -h`
 | .rodata.str1.* |           | 00000030  | 00000030  | 0000002d  |
 
 **File 2**
+
 |                | taille O0 | taille O1 | taille O2 | taille Os |
 | -------------- | --------- | --------- | --------- | --------- |
 | .text.*        | 000000b8  | 00000074  | 00000074  | 00000070  |
@@ -27,6 +29,7 @@ Commandes utilisées : `objdump -h`
 | .rodata.str1.* |           | 00000030  | 00000030  | 0000002d  |
 
 **File 3**
+
 |                | taille O0 | taille O1 | taille O2 | taille Os |
 | -------------- | --------- | --------- | --------- | --------- |
 | .text.*        | 000000c0  | 00000070  | 00000070  | 0000006c  |
@@ -38,6 +41,7 @@ Commandes utilisées : `objdump -h`
 | .rel.data.*    | 00000008  | 00000008  | 00000008  | 00000008  |
 
 **File 4**
+
 |                | taille O0 | taille O1 | taille O2 | taille Os |
 | -------------- | --------- | --------- | --------- | --------- |
 | .text.*        | 000000bc  | 00000074  | 00000074  | 00000070  |
