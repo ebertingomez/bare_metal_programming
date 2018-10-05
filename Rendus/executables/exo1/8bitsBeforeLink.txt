@@ -1,0 +1,32 @@
+
+file2.o:	file format ELF32-arm-little
+
+SYMBOL TABLE:
+00000000         *UND*		 00000000 
+00000000 l    df *ABS*		 00000000 file2.c
+00000000 l    d  .text		 00000000 .text
+00000000 l    d  .data		 00000000 .data
+00000000 l    d  .bss		 00000000 .bss
+00000000         .text		 00000000 $a
+00000060         .text		 00000000 $d
+00000000 l    d  .rodata		 00000000 .rodata
+00000000         .rodata		 00000000 $d
+00000000         .data		 00000000 $d
+00000000 l       .bss		 00000001 z.5172
+00000000         .bss		 00000000 $d
+00000000 l    d  .rodata.str1.4		 00000000 .rodata.str1.4
+00000000         .rodata.str1.4		 00000000 $d
+00000000 l    d  .debug_info		 00000000 .debug_info
+00000000 l    d  .debug_abbrev		 00000000 .debug_abbrev
+00000000 l    d  .debug_loc		 00000000 .debug_loc
+00000000 l    d  .debug_aranges		 00000000 .debug_aranges
+00000000 l    d  .debug_line		 00000000 .debug_line
+00000000 l    d  .debug_str		 00000000 .debug_str
+00000000 l    d  .debug_frame		 00000000 .debug_frame
+00000000 l    d  .comment		 00000000 .comment
+00000000 l    d  .ARM.attributes		 00000000 .ARM.attributes
+00000000 g     F .text		 00000074 main
+00000000         *UND*		 00000000 printf
+00000001 g       *COM*		 00000001 y
+00000000 g       .rodata		 0000000d mesg
+00000000 g       .data		 00000004 x
