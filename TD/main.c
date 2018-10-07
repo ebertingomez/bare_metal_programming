@@ -5,6 +5,7 @@ int zero = 0;
 int main()
 {
   fibo(8);
+  //TODO: Add LED loop
   return global;
 }
 
