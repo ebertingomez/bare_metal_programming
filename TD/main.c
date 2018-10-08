@@ -14,10 +14,17 @@ int main()
       asm volatile("nop");
     }
     led_g_off();
+    led(LED_YELLOW);
     for (int i = 0; i < 1000000; i++)
     {
       asm volatile("nop");
     }
+    led(LED_BLUE);
+    for (int i = 0; i < 1000000; i++)
+    {
+      asm volatile("nop");
+    }
+    led(LED_OFF);
   }
 
   return 0;

@@ -8,13 +8,6 @@
 #define PC9_MODE_REG (*(volatile uint32_t *)0x48000800)
 #define PC9_VALUE_REG (*(volatile uint32_t *)0x48000818)
 
-enum state
-{
-    LED_OFF = 0,
-    LED_YELLOW = 1,
-    LED_BLUE = 2
-};
-
 void led_init()
 {
     GPIO_CLOCK_REG |= (1 << 1);
@@ -33,12 +26,13 @@ void led_g_off()
 }
 void led(int s)
 {
-
+    led_init();
     switch (s)
     {
     case LED_OFF:
-        PC9_VALUE_REG = PC9_VALUE_REG;
+        PC9_MODE_REG &= ~(3 << 18);
         break;
+
     case LED_YELLOW:
         PC9_VALUE_REG |= (1 << 9);
         break;
