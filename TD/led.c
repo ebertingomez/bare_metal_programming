@@ -24,7 +24,7 @@ void led_g_off()
 {
     GPIOB5_VALUE_REG |= (1 << 30);
 }
-void led(int s)
+void led(state s)
 {
     led_init();
     switch (s)
