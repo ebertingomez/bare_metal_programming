@@ -1,3 +1,4 @@
+#define REG (*(volatile uint32_t *)0xff00ff00)
 enum state
 {
     LED_OFF = 0,

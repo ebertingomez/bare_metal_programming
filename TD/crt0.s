@@ -2,7 +2,7 @@
 .syntax unified
 
 _start:
- LDR sp,=0x10001000
+ LDR sp,=stack
  BL init_bss
  BL main
  BL _end

@@ -7,24 +7,25 @@ MEMORY
 
 SECTIONS {
 	.text : {
-		*(.text)
+		*(.text*)
 } > sdram1
 	 
 	.rodata : {
-		*(.rodata)
+		*(.rodata*)
 } > sdram1
 		
 	.data : {
-	  	*(.data)      
+	  	*(.data*)      
 } > sdram1
 		
 	.bss : {
-		*(.bss)
-		*(COMMON)
+		*(*bss*)
+		*(*COM*)
 } > sdram1
 
 start_of_BSS  = ADDR(.bss);
 size_of_BSS = SIZEOF(.bss);
+stack = start_of_BSS + size_of_BSS;
 
 }
 
