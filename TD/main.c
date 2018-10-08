@@ -2,13 +2,25 @@
 
 int fibo(int i);
 
-int global;
-int zero = 0;
 int main()
 {
-  fibo(8);
-  //TODO: Add LED loop
-  return global;
+  led_init();
+  led_g_off();
+  while (1)
+  {
+    led_g_on();
+    for (int i = 0; i < 1000000; i++)
+    {
+      asm volatile("nop");
+    }
+    led_g_off();
+    for (int i = 0; i < 1000000; i++)
+    {
+      asm volatile("nop");
+    }
+  }
+
+  return 0;
 }
 
 int fibo(int i)

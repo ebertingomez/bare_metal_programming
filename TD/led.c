@@ -1,7 +1,7 @@
 #include "led.h"
 #include <stdint.h>
 
-#define GPIO_CLOCK_REG (*(volatile uint32_t *)0x4800044c)
+#define GPIO_CLOCK_REG (*(volatile uint32_t *)0x4002104c)
 #define GPIOB5_MODE_REG (*(volatile uint32_t *)0x48000400)
 #define GPIOB5_VALUE_REG (*(volatile uint32_t *)0x48000418)
 
@@ -26,7 +26,4 @@ void led_g_off()
 {
     GPIOB5_VALUE_REG = (GPIOB5_VALUE_REG & ~(1<<14)) | (1<<30);
 }
-void led(state)
-{
-    //TODO
-}
+//TODO: void led(int a){}
