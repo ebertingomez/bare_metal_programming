@@ -10,7 +10,7 @@
 
 void led_init()
 {
-    GPIO_CLOCK_REG |= (1 << 1);
+    GPIO_CLOCK_REG |= (3 << 1);
     GPIOB5_MODE_REG = (GPIOB5_MODE_REG | (1 << 28)) & ~(1 << 29);
 
     PC9_MODE_REG = (PC9_MODE_REG | (1 << 18)) & ~(1 << 19);
@@ -32,15 +32,12 @@ void led(int s)
     case LED_OFF:
         PC9_MODE_REG &= ~(3 << 18);
         break;
-
     case LED_YELLOW:
         PC9_VALUE_REG |= (1 << 9);
         break;
-
     case LED_BLUE:
         PC9_VALUE_REG |= (1 << 25);
         break;
-
     default:
         break;
     }

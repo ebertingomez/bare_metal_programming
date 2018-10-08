@@ -4,23 +4,25 @@ int fibo(int i);
 
 int main()
 {
+  const int clk_freq = 2000000;
   led_init();
   led_g_off();
+  led(LED_OFF);
   while (1)
   {
     led_g_on();
-    for (int i = 0; i < 1000000; i++)
+    for (int i = 0; i < clk_freq; i++)
     {
       asm volatile("nop");
     }
     led_g_off();
     led(LED_YELLOW);
-    for (int i = 0; i < 1000000; i++)
+    for (int i = 0; i < clk_freq; i++)
     {
       asm volatile("nop");
     }
     led(LED_BLUE);
-    for (int i = 0; i < 1000000; i++)
+    for (int i = 0; i < clk_freq; i++)
     {
       asm volatile("nop");
     }
