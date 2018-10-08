@@ -13,7 +13,7 @@ ASFLAGS = -mthumb -mcpu=cortex-m4 -mfloat-abi=hard -mfpu=fpv4-sp-d16
 LDFLAGS = -T
 LOADLIBES = ld_ram.lds 
 
-OBJS = main.o crt0.o init.o
+OBJS = main.o crt0.o init.o led.o
 EXE = main
 
 all : $(EXE) 
