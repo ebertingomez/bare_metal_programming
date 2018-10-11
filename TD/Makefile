@@ -18,6 +18,8 @@ OBJS = main.o crt0.o init.o led.o
 CLOCK = clocks.o
 EXE = main
 
+VPATH = CMSIS/Device/ST/STM32L4xx/Include CMSIS/Include
+
 all : $(EXE) 
 
 $(EXE) : $(LOADLIBES) $(OBJS) $(CLOCK)
