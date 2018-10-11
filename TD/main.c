@@ -1,10 +1,12 @@
 #include "led.h"
+#include "clocks.h"
 
 int fibo(int i);
 
 int main()
 {
-  const int clk_freq = 2000000;
+  clocks_init();
+  const int clk_freq = 20000000;
   led_init();
   led_g_off();
   led(LED_OFF);

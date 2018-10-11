@@ -15,11 +15,12 @@ LDFLAGS = -T
 LOADLIBES = ld_ram.lds 
 # Objects to be created
 OBJS = main.o crt0.o init.o led.o
+CLOCK = clocks.o
 EXE = main
 
 all : $(EXE) 
 
-$(EXE) : $(LOADLIBES) $(OBJS)
+$(EXE) : $(LOADLIBES) $(OBJS) $(CLOCK)
 	$(CC) $(LDFLAGS) $^ -o $@
 
 startgdbserver :
