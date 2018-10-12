@@ -1,5 +1,4 @@
 #include "led.h"
-#include <stdint.h>
 #include "stm32l475xx.h"
 
 void led_init()
