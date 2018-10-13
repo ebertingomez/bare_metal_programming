@@ -18,7 +18,7 @@ LOADLIBES = ld_ram.lds
 OBJS = main.o crt0.o init.o led.o uart.o
 CLOCK = clocks.o
 EXE = main
-
+# Paths to be included during the compilation
 VPATH = CMSIS/Device/ST/STM32L4xx/Include CMSIS/Include
 
 all : $(EXE) 

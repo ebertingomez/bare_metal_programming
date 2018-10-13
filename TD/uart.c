@@ -28,21 +28,19 @@ void uart_putchar(uint8_t c)
     while (READ_BIT(USART1->ISR, USART_ISR_TXE) != 0)
     {
     }
-            WRITE_REG(USART1->TDR, c);
-
+    WRITE_REG(USART1->TDR, c);
 }
 uint8_t uart_getchar()
 { 
     while (READ_BIT(USART1->ISR, USART_ISR_RXNE) != 0)
     {
-        
     }
     return READ_REG(USART1->RDR);
-
 }
 void uart_puts(const uint8_t *s)
 { //TODO
 }
 void uart_gets(uint8_t *s, size_t size)
 { //TODO
+
 }

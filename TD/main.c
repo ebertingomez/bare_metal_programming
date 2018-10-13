@@ -1,35 +1,16 @@
 #include "led.h"
 #include "clocks.h"
+#include "uart.h"
 
 int fibo(int i);
 
 int main()
 {
   clocks_init();
-  const int clk_freq = 20000000;
-  led_init();
-  led_g_off();
-  led(LED_OFF);
-  while (1)
-  {
-    led_g_on();
-    for (int i = 0; i < clk_freq; i++)
-    {
-      asm volatile("nop");
-    }
-    led_g_off();
-    led(LED_YELLOW);
-    for (int i = 0; i < clk_freq; i++)
-    {
-      asm volatile("nop");
-    }
-    led(LED_BLUE);
-    for (int i = 0; i < clk_freq; i++)
-    {
-      asm volatile("nop");
-    }
-    led(LED_OFF);
-  }
+  uart_putchar(0x44);
+  uart_putchar(0x45);
+  uart_putchar(0x46);
+  uart_putchar(0x47);
 
   return 0;
 }
