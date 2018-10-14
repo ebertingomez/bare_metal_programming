@@ -61,3 +61,20 @@ void uart_gets(uint8_t *s, size_t size)
     } while (*(s + i - 1) != '\n' && i < size - 1);
     *(s + i) = '\0';
 }
+
+uint32_t sum_of_hex(int size)
+{
+    uint32_t totalSum = 0;
+    uint8_t array[size];
+    for (int i = 0; i < size; i++)
+    {
+        array[i] = uart_getchar();
+    }
+
+    for (int i = 0; i < size; i++)
+    {
+        totalSum = totalSum + array[i];
+    }
+
+    return totalSum;
+}
