@@ -9,8 +9,8 @@ typedef enum
 } state;
 
 void led_init(void);
-void led_g_on();
-void led_g_off();
+void led_g_on(void);
+void led_g_off(void);
 void led(state);
 
 #endif

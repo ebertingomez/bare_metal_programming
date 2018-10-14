@@ -3,3 +3,4 @@ main
 *.d
 *~
 .DS_Store
+TD/doc/*

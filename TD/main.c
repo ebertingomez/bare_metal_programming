@@ -1,39 +1,35 @@
 #include "led.h"
 #include "clocks.h"
+#include "uart.h"
 /* This file contains the main function of be booted and executed. It will be used to test:
   - Some Fibonacci's sequence elements usign a recursive function (call fibo(int)
   - the interaction with 3 LEDs of a board*/
+
+
 int fibo(int i);
 
 int main()
 {
   clocks_init();
-  const int clk_freq = 20000000;
   led_init();
-  led_g_off();
-  led(LED_OFF);
-  while (1)
+  uart_init();
+  /*
+  size_t sizemax = 1024;
+  const char *string1 = "\rWrite something please: \r\n";
+  const char *string2 = "\rYou wrote: \r";
+  uint8_t s[sizemax];
+  
+  for(int i=0; i<10; i++)
   {
-    led_g_on();
-    for (int i = 0; i < clk_freq; i++)
-    {
-      asm volatile("nop");
-    }
-    led_g_off();
-    led(LED_YELLOW);
-    for (int i = 0; i < clk_freq; i++)
-    {
-      asm volatile("nop");
-    }
-    led(LED_BLUE);
-    for (int i = 0; i < clk_freq; i++)
-    {
-      asm volatile("nop");
-    }
-    led(LED_OFF);
+    uart_puts((uint8_t *)string1);
+    uart_gets(s, sizemax);
+    uart_puts((uint8_t *)string2);
+    uart_puts(s);
   }
-
-  return 0;
+  */
+  /* ./checksum.py -p /dev/cu.usbmodem000770868477 -v -n 100 */
+  uint32_t sumPython = sum_of_hex(100);
+  return sumPython;
 }
 /* This function let to calculate a fibonacci number based on recursivity*/
 int fibo(int i)
