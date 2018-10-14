@@ -7,10 +7,21 @@ int fibo(int i);
 int main()
 {
   clocks_init();
-  uart_putchar(0x44);
-  uart_putchar(0x45);
-  uart_putchar(0x46);
-  uart_putchar(0x47);
+  uart_init();
+  while (1)
+  {
+    uart_putchar('a');
+    uart_putchar('b');
+    uart_putchar('c');
+    uart_putchar('d');
+    uint8_t b = uart_getchar();
+
+    uart_putchar(b);
+
+    uint8_t c = uart_getchar();
+
+    uart_putchar(c);
+  }
 
   return 0;
 }
