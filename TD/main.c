@@ -9,34 +9,17 @@ int main()
   clocks_init();
   led_init();
   uart_init();
+  size_t size = 1024;
+  const char *string1 = "\rWrite something please: \r\n";
+  const char *string2 = "\rYou wrote: \r";
+  uint8_t s[size];
   while (1)
   {
-    led_g_on();
-    led_g_off();
-    uart_putchar('a');
-    led_g_on();
-    led_g_off();
-    uart_putchar('b');
-    led_g_on();
-    led_g_off();
-    uart_putchar('c');
-    led_g_on();
-    led_g_off();
-    uart_putchar('d');
-    led_g_on();
-    led_g_off();
-    uint8_t b = uart_getchar();
-    led_g_on();
-    led_g_off();
-    uart_putchar(b);
-    led_g_on();
-    led_g_off();
-    uint8_t c = uart_getchar();
-    led_g_on();
-    led_g_off();
-    uart_putchar(c);
+    uart_puts((uint8_t *)string1);
+    uart_gets(s, size);
+    uart_puts((uint8_t *)string2);
+    uart_puts(s);
   }
-
   return 0;
 }
 
