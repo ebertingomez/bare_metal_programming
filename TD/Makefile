@@ -8,7 +8,7 @@ DEVICE = -device STM32L475VG
 DEBUGGER = arm-none-eabi-gdb
 #Compiling
 CC = arm-none-eabi-gcc -nostdlib -Wall -Wextra -Werror
-CFLAGS = -g -O1 -std=gnu99 -iquoteCMSIS/Device/ST/STM32L4xx/Include -iquoteCMSIS/Include
+CFLAGS = -g -O2 -std=gnu99 -iquoteCMSIS/Device/ST/STM32L4xx/Include -iquoteCMSIS/Include
 CPPFLAGS += -DSTM32L475xx
 TARGET_ARCH = -mcpu=cortex-m4 -mthumb  -mfloat-abi=hard -mfpu=fpv4-sp-d16
 #Assembling
