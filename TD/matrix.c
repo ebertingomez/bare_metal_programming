@@ -1,7 +1,10 @@
 #include "matrix.h"
 #include "stm32l475xx.h"
 #include "stm32l4xx.h"
+/* This file provides a set of function to initialize and control all the 
+LEDs from a matrix. To test it, please call the function test_pixels() */
 
+/* This type represents a pixel using its color decomposition in RGB format */
 typedef struct
 {
     uint8_t r;
@@ -9,18 +12,25 @@ typedef struct
     uint8_t b;
 } rgb_color;
 
+#define LEDNUMBER 8
+
+/* Initializes all the values of the bank0 to 1 in order to use bank1 */
 static void init_bank0(void);
 
+/* Resets all the rows of the current BANK */
 static void deactivate_rows();
 
-static void delay(int time)
+/* Makes a simulates a pause in the execution.
+Steps: Number of operations executed during that "pause" */
+static void delay(int steps)
 {
-    for (int i = 0; i < time; i++)
+    for (int i = 0; i < steps; i++)
     {
         asm volatile("nop");
     }
 }
 
+/* Initializes all the registers of the board to the right value */
 static void matrix_init()
 {
 
@@ -77,6 +87,7 @@ static void matrix_init()
 #define ROW6(BIT) ((BIT) ? (SET_BIT(GPIOB->BSRR, GPIO_BSRR_BS0)) : (SET_BIT(GPIOB->BSRR, GPIO_BSRR_BR0)))
 #define ROW7(BIT) ((BIT) ? (SET_BIT(GPIOA->BSRR, GPIO_BSRR_BS3)) : (SET_BIT(GPIOA->BSRR, GPIO_BSRR_BR3)))
 
+/* Generates a positive pulse SCK (OFF-ON-OFF) */
 static void pulse_SCK()
 {
     SCK(0);
@@ -87,6 +98,7 @@ static void pulse_SCK()
     delay(3);
 }
 
+/* Generates a negative pulse LAT (ON-OFF-ON) in order to transfer the bits to BANK1*/
 static void pulse_LAT()
 {
     LAT(1);
@@ -97,6 +109,7 @@ static void pulse_LAT()
     delay(3);
 }
 
+/* Resets all the rows of the current BANK */
 static void deactivate_rows()
 {
     ROW0(0);
@@ -109,6 +122,7 @@ static void deactivate_rows()
     ROW7(0);
 }
 
+/* Sets the value of a specific row */
 static void activate_row(int row)
 {
     switch (row)
@@ -143,6 +157,7 @@ static void activate_row(int row)
     }
 }
 
+/* Send a 8bit word starting from the most the most significant bit to a specific BANK */ 
 static void send_byte(uint8_t val, int bank)
 {
     switch (bank)
@@ -165,10 +180,11 @@ static void send_byte(uint8_t val, int bank)
     }
 }
 
+/* Set the colors of the RGB leds of a row according to an array of rgb_colors */
 static void mat_set_row(int row, const rgb_color *val)
 {
 
-    for (size_t i = 0; i < 8; i++)
+    for (size_t i = 0; i < LEDNUMBER; i++)
     {
         send_byte(val[i].b, 1);
         send_byte(val[i].g, 1);
@@ -178,6 +194,7 @@ static void mat_set_row(int row, const rgb_color *val)
     pulse_LAT();
 }
 
+/* Initialize all the values of the bank0 to 1 in order to use bank1 */
 static void init_bank0()
 {
     for (size_t i = 0; i < 8; i++)
@@ -189,27 +206,29 @@ static void init_bank0()
     pulse_LAT();
 }
 
+/* Test if the configuration is correct. It shows a sequence of red rows, then a red sequence
+and a blue sequence of rows  */
 void test_pixels()
 {
-    rgb_color a[8];
-    rgb_color b[8];
-    rgb_color c[8];
+    rgb_color a[LEDNUMBER];
+    rgb_color b[LEDNUMBER];
+    rgb_color c[LEDNUMBER];
 
-    for (int i = 0; i < 8; i++)
+    for (int i = 0; i < LEDNUMBER; i++)
     {
         a[i].r = 255 - i * 36;
         a[i].b = 0;
         a[i].g = 0;
     }
 
-    for (int i = 0; i < 8; i++)
+    for (int i = 0; i < LEDNUMBER; i++)
     {
         b[i].r = 0;
         b[i].b = 255 - i * 36;
         b[i].g = 0;
     }
 
-    for (int i = 0; i < 8; i++)
+    for (int i = 0; i < LEDNUMBER; i++)
     {
         c[i].r = 0;
         c[i].b = 0;
@@ -217,25 +236,25 @@ void test_pixels()
     }
 
     matrix_init();
-    for (int i = 0; i < 8; i++)
+    for (int i = 0; i < LEDNUMBER; i++)
     {
         mat_set_row(i, a);
         delay(300000);
     }
-    delay(200000);
+    delay(300000);
     deactivate_rows();
-    for (int i = 0; i < 8; i++)
+    for (int i = 0; i < LEDNUMBER; i++)
     {
         mat_set_row(i, b);
         delay(300000);
     }
-    delay(200000);
+    delay(300000);
     deactivate_rows();
-    for (int i = 0; i < 8; i++)
+    for (int i = 0; i < LEDNUMBER; i++)
     {
         mat_set_row(i, c);
         delay(300000);
     }
-    delay(200000);
+    delay(300000);
     deactivate_rows();
 }
