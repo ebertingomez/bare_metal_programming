@@ -23,7 +23,7 @@ static void delay(int time)
 
 static void matrix_init()
 {
-    
+
     SET_BIT(RCC->AHB2ENR, RCC_AHB2ENR_GPIOAEN);
     SET_BIT(RCC->AHB2ENR, RCC_AHB2ENR_GPIOBEN);
     SET_BIT(RCC->AHB2ENR, RCC_AHB2ENR_GPIOCEN);
@@ -167,7 +167,7 @@ static void send_byte(uint8_t val, int bank)
 
 static void mat_set_row(int row, const rgb_color *val)
 {
-    
+
     for (size_t i = 0; i < 8; i++)
     {
         send_byte(val[i].b, 1);
@@ -192,17 +192,50 @@ static void init_bank0()
 void test_pixels()
 {
     rgb_color a[8];
+    rgb_color b[8];
+    rgb_color c[8];
+
     for (int i = 0; i < 8; i++)
     {
-        a[i].r = 0;
-        a[i].b = 255;
+        a[i].r = 255 - i * 36;
+        a[i].b = 0;
         a[i].g = 0;
+    }
+
+    for (int i = 0; i < 8; i++)
+    {
+        b[i].r = 0;
+        b[i].b = 255 - i * 36;
+        b[i].g = 0;
+    }
+
+    for (int i = 0; i < 8; i++)
+    {
+        c[i].r = 0;
+        c[i].b = 0;
+        c[i].g = 255 - i * 36;
     }
 
     matrix_init();
     for (int i = 0; i < 8; i++)
     {
-        mat_set_row(i,a);
-        delay(3);
+        mat_set_row(i, a);
+        delay(300000);
     }
+    delay(200000);
+    deactivate_rows();
+    for (int i = 0; i < 8; i++)
+    {
+        mat_set_row(i, b);
+        delay(300000);
+    }
+    delay(200000);
+    deactivate_rows();
+    for (int i = 0; i < 8; i++)
+    {
+        mat_set_row(i, c);
+        delay(300000);
+    }
+    delay(200000);
+    deactivate_rows();
 }
