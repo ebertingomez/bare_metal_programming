@@ -11,6 +11,7 @@ typedef struct
 
 static void init_bank0(void);
 
+static void deactivate_rows();
 
 static void delay(int time)
 {
@@ -22,6 +23,7 @@ static void delay(int time)
 
 static void matrix_init()
 {
+    
     SET_BIT(RCC->AHB2ENR, RCC_AHB2ENR_GPIOAEN);
     SET_BIT(RCC->AHB2ENR, RCC_AHB2ENR_GPIOBEN);
     SET_BIT(RCC->AHB2ENR, RCC_AHB2ENR_GPIOCEN);
@@ -52,17 +54,12 @@ static void matrix_init()
     SET_BIT(GPIOB->BSRR, GPIO_BSRR_BR1);
     SET_BIT(GPIOA->BSRR, GPIO_BSRR_BR4);
     //PC0-7
-    SET_BIT(GPIOB->BSRR, GPIO_BSRR_BR2);
-    SET_BIT(GPIOA->BSRR, GPIO_BSRR_BR15);
-    SET_BIT(GPIOA->BSRR, GPIO_BSRR_BR2);
-    SET_BIT(GPIOA->BSRR, GPIO_BSRR_BR7);
-    SET_BIT(GPIOA->BSRR, GPIO_BSRR_BR6);
-    SET_BIT(GPIOA->BSRR, GPIO_BSRR_BR5);
-    SET_BIT(GPIOB->BSRR, GPIO_BSRR_BR0);
-    SET_BIT(GPIOA->BSRR, GPIO_BSRR_BR3);
+    deactivate_rows();
 
-    delay(2000000);
-
+    delay(10000);
+    //Set
+    SET_BIT(GPIOC->BSRR, GPIO_BSRR_BS3);
+    delay(3);
     init_bank0();
 }
 
@@ -83,21 +80,21 @@ static void matrix_init()
 static void pulse_SCK()
 {
     SCK(0);
-    delay(20);
+    delay(3);
     SCK(1);
-    delay(20);
+    delay(3);
     SCK(0);
-    delay(20);
+    delay(3);
 }
 
 static void pulse_LAT()
 {
-    SCK(1);
-    delay(20);
-    SCK(0);
-    delay(20);
-    SCK(1);
-    delay(20);
+    LAT(1);
+    delay(3);
+    LAT(0);
+    delay(3);
+    LAT(1);
+    delay(3);
 }
 
 static void deactivate_rows()
@@ -194,18 +191,18 @@ static void init_bank0()
 
 void test_pixels()
 {
-    deactivate_rows();
     rgb_color a[8];
     for (int i = 0; i < 8; i++)
     {
-        a[i].r = 20;
-        a[i].b = 20;
-        a[i].g = 20;
+        a[i].r = 0;
+        a[i].b = 255;
+        a[i].g = 0;
     }
+
     matrix_init();
     for (int i = 0; i < 8; i++)
     {
         mat_set_row(i,a);
-        delay(200000);
+        delay(3);
     }
 }
