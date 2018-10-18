@@ -282,7 +282,7 @@ void test_image()
                 row[j].b = *p;
                 p++;
             }
-            mat_set_row(7-i, row);
+            mat_set_row(7 - i, row);
         }
     }
 }
