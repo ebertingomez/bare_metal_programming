@@ -5,13 +5,17 @@
 /* This file contains the main function of be booted and executed. It will be used to test:
   - Some Fibonacci's sequence elements usign a recursive function (call fibo(int)
   - The interaction with 3 LEDs of the board
-  - The Interaction with the serial port*/
+  - The Interaction with the serial port
+  - The Interation with a LED matrix. Call test_pixel() and test_image() */
 
 int fibo(int i);
 
 int main()
 {
-  test_pixels();
+  while (1)
+  {
+    test_image();
+  }
   return 0;
 }
 /* This function let to calculate a fibonacci number based on recursivity*/
