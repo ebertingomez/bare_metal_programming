@@ -18,9 +18,12 @@ ASFLAGS = -mthumb -mcpu=cortex-m4 -mfloat-abi=hard -mfpu=fpv4-sp-d16
 LDFLAGS = -T
 LOADLIBES = ld_ram.lds 
 # Objects to be created
-OBJS = main.o crt0.o init.o led.o uart.o matrix.o
+OBJS = main.o crt0.o init.o led.o uart.o matrix.o image.o
 CLOCK = clocks.o
 EXE = main
+#Convert the format of a file from binary to elf
+CONVERTER = arm-none-eabi-objcopy
+CONVERTERFLAGS = -I binary -O elf32-littlearm -B arm
 # Paths to be included during the compilation
 VPATH = CMSIS/Device/ST/STM32L4xx/Include CMSIS/Include
 
@@ -28,6 +31,9 @@ all : $(EXE)
 
 $(EXE) : $(LOADLIBES) $(OBJS) $(CLOCK)
 	$(CC) $(LDFLAGS) $^ -o $@
+
+%.o : %.raw
+	$(CONVERTER) $(CONVERTERFLAGS) $^ $@
 
 startgdbserver :
 	$(DRIVER) $(DEVICE) $(DRIVER_TAGS)
@@ -39,4 +45,4 @@ serial:
 	$(SERIALCLIENT) $(SERIALTAGS)
 
 clean:
-	rm -f $(OBJS) $(EXE)
+	rm -f $(OBJS) $(EXE) 

@@ -11,7 +11,7 @@ int fibo(int i);
 
 int main()
 {
-  test_pixels();
+  test_image();
   return 0;
 }
 /* This function let to calculate a fibonacci number based on recursivity*/

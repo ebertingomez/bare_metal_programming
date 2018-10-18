@@ -12,7 +12,9 @@ typedef struct
     uint8_t b;
 } rgb_color;
 
-#define LEDNUMBER 8
+#define COLUMN_NUMBER 8
+#define ROW_NUMBER 8
+extern uint8_t _binary_image_raw_start;
 
 /* Initializes all the values of the bank0 to 1 in order to use bank1 */
 static void init_bank0(void);
@@ -91,22 +93,22 @@ static void matrix_init()
 static void pulse_SCK()
 {
     SCK(0);
-    delay(3);
+    delay(1);
     SCK(1);
-    delay(3);
+    delay(1);
     SCK(0);
-    delay(3);
+    delay(1);
 }
 
 /* Generates a negative pulse LAT (ON-OFF-ON) in order to transfer the bits to BANK1*/
 static void pulse_LAT()
 {
     LAT(1);
-    delay(3);
+    delay(1);
     LAT(0);
-    delay(3);
+    delay(1);
     LAT(1);
-    delay(3);
+    delay(1);
 }
 
 /* Resets all the rows of the current BANK */
@@ -157,7 +159,7 @@ static void activate_row(int row)
     }
 }
 
-/* Send a 8bit word starting from the most the most significant bit to a specific BANK */ 
+/* Send a 8bit word starting from the most the most significant bit to a specific BANK */
 static void send_byte(uint8_t val, int bank)
 {
     switch (bank)
@@ -183,8 +185,8 @@ static void send_byte(uint8_t val, int bank)
 /* Set the colors of the RGB leds of a row according to an array of rgb_colors */
 static void mat_set_row(int row, const rgb_color *val)
 {
-
-    for (size_t i = 0; i < LEDNUMBER; i++)
+    deactivate_rows();
+    for (size_t i = 0; i < COLUMN_NUMBER; i++)
     {
         send_byte(val[i].b, 1);
         send_byte(val[i].g, 1);
@@ -210,25 +212,25 @@ static void init_bank0()
 and a blue sequence of rows  */
 void test_pixels()
 {
-    rgb_color a[LEDNUMBER];
-    rgb_color b[LEDNUMBER];
-    rgb_color c[LEDNUMBER];
+    rgb_color a[ROW_NUMBER];
+    rgb_color b[ROW_NUMBER];
+    rgb_color c[ROW_NUMBER];
 
-    for (int i = 0; i < LEDNUMBER; i++)
+    for (int i = 0; i < ROW_NUMBER; i++)
     {
         a[i].r = 255 - i * 36;
         a[i].b = 0;
         a[i].g = 0;
     }
 
-    for (int i = 0; i < LEDNUMBER; i++)
+    for (int i = 0; i < ROW_NUMBER; i++)
     {
         b[i].r = 0;
         b[i].b = 255 - i * 36;
         b[i].g = 0;
     }
 
-    for (int i = 0; i < LEDNUMBER; i++)
+    for (int i = 0; i < ROW_NUMBER; i++)
     {
         c[i].r = 0;
         c[i].b = 0;
@@ -236,25 +238,50 @@ void test_pixels()
     }
 
     matrix_init();
-    for (int i = 0; i < LEDNUMBER; i++)
+    for (int i = 0; i < ROW_NUMBER; i++)
     {
         mat_set_row(i, a);
         delay(300000);
     }
     delay(300000);
     deactivate_rows();
-    for (int i = 0; i < LEDNUMBER; i++)
+    for (int i = 0; i < ROW_NUMBER; i++)
     {
         mat_set_row(i, b);
         delay(300000);
     }
     delay(300000);
     deactivate_rows();
-    for (int i = 0; i < LEDNUMBER; i++)
+    for (int i = 0; i < ROW_NUMBER; i++)
     {
         mat_set_row(i, c);
         delay(300000);
     }
     delay(300000);
     deactivate_rows();
+}
+
+void test_image()
+{
+
+    rgb_color row[8];
+    uint8_t *p = &_binary_image_raw_start;
+    matrix_init();
+    while (1)
+    {
+        p = &_binary_image_raw_start;
+        for (int i = 0; i < ROW_NUMBER; i++)
+        {
+            for (int j = 0; j < COLUMN_NUMBER; j++)
+            {
+                row[j].r = *p;
+                p++;
+                row[j].g = *p;
+                p++;
+                row[j].b = *p;
+                p++;
+            }
+            mat_set_row(i, row);
+        }
+    }
 }
