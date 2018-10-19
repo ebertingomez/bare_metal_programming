@@ -18,7 +18,7 @@ ASFLAGS = -mthumb -mcpu=cortex-m4 -mfloat-abi=hard -mfpu=fpv4-sp-d16
 LDFLAGS = -T
 LOADLIBES = ld_ram.lds 
 # Objects to be created
-OBJS = main.o crt0.o init.o led.o uart.o matrix.o image.o
+OBJS = main.o crt0.o init.o led.o uart.o matrix.o image.o irq.o
 CLOCK = clocks.o
 EXE = main
 #Convert the format of a file from binary to elf

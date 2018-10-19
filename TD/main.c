@@ -14,7 +14,7 @@ int main()
 {
   while (1)
   {
-    test_image();
+    test_pixels();
   }
   return 0;
 }
