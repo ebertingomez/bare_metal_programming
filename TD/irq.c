@@ -209,5 +209,5 @@ static void __attribute__((aligned(512))) * vector_table[] = {
 };
 
 void irq_init(){
-
+    WRITE_REG(SCB->VTOR, (uint32_t) vector_table);
 }

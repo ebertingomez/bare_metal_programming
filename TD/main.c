@@ -19,6 +19,7 @@ int main()
   button_init();
   while (1)
   {
+    test_image();
   }
   return 0;
 }

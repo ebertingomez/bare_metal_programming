@@ -12,7 +12,6 @@ void button_init()
     SET_BIT(EXTI->FTSR1, EXTI_FTSR1_FT13);
     MODIFY_REG(SYSCFG->EXTICR[3], SYSCFG_EXTICR4_EXTI13_Msk, SYSCFG_EXTICR4_EXTI13_PC);
     NVIC_EnableIRQ(40);
-
     led_init();
     led(LED_OFF);
 }
@@ -21,7 +20,7 @@ void EXTI15_10_IRQHandler()
 {
     SET_BIT(EXTI->PR1, EXTI_PR1_PIF13);
     led_g_on();
-    for (int i = 0; i < 100000; i++)
+    for (int i = 0; i < 200000; i++)
     {
         asm volatile("nop");
     }
