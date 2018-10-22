@@ -265,7 +265,7 @@ void test_pixels()
 the LED matrix  */
 void test_image()
 {
-    rgb_color row[8];
+    rgb_color row[ROW_NUMBER];
     uint8_t *p = &_binary_image_raw_start;
     matrix_init();
     while (1)

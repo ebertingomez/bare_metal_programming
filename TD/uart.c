@@ -5,7 +5,7 @@
 the serial port. */
 
 /* Initialization of all the registers related to the serial port USART1 */
-void uart_init()
+void uart_init(int baudrate)
 {
     /* Clocks initialization ; PCLK=80MHz*/
     SET_BIT(RCC->APB2ENR, RCC_APB2ENR_USART1EN);
@@ -22,7 +22,7 @@ void uart_init()
     /* Disable of USART1 for setting the parameters of the serial port*/
     CLEAR_BIT(USART1->CR1, USART_CR1_UE);
     /* Setting up the serial port speed */
-    WRITE_REG(USART1->BRR, 694);
+    WRITE_REG(USART1->BRR, (uint16_t)80000000/baudrate);
     /* Setting up and activation of the serial port (8N1 with oversampling of 16) */
     WRITE_REG(USART1->CR1, 0);
     WRITE_REG(USART1->CR2, 0);
