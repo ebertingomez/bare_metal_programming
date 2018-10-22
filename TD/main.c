@@ -1,9 +1,5 @@
-#include "led.h"
 #include "clocks.h"
-#include "uart.h"
-#include "matrix.h"
-#include "irq.h"
-#include "buttons.h"
+#include "led_irq_uart.h"
 /* This file contains the main function of be booted and executed. It will be used to test:
   - Some Fibonacci's sequence elements usign a recursive function (call fibo(int)
   - The interaction with 3 LEDs of the board
@@ -16,10 +12,10 @@ int main()
 {
   clocks_init();
   irq_init();
-  button_init();
+  serial_init();
   while (1)
   {
-    test_image();
+    //read_print_pixels(frame);
   }
   return 0;
 }

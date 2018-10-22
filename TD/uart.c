@@ -38,7 +38,7 @@ static void uart_putchar(uint8_t c)
     WRITE_REG(USART1->TDR, c);
 }
 /* Read a 8bit value from the serial port */
-static uint8_t uart_getchar()
+uint8_t uart_getchar()
 {
     while (READ_BIT(USART1->ISR, USART_ISR_RXNE) == 0)
     {

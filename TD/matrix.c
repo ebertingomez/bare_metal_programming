@@ -261,16 +261,15 @@ void test_pixels()
     deactivate_rows();
 }
 
-/* Test if it is possible to read a raw binary file and represent its information using
-the LED matrix  */
-void test_image()
+/* Read raw binary information and represent its information using the LED matrix  */
+void read_print_pixels(uint8_t * pixels)
 {
     rgb_color row[ROW_NUMBER];
-    uint8_t *p = &_binary_image_raw_start;
+    uint8_t *p = pixels;
     matrix_init();
     while (1)
     {
-        p = &_binary_image_raw_start;
+        p = pixels;
         for (int i = 0; i < ROW_NUMBER; i++)
         {
             for (int j = 0; j < COLUMN_NUMBER; j++)

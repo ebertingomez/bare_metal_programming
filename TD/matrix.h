@@ -10,4 +10,7 @@ void test_pixels(void);
 /* Test if it is possible to read a raw binary file and represent its information using
 the LED matrix  */
 void test_image(void);
+
+/* Read raw binary information and represent its information using the LED matrix  */
+void read_print_pixels(uint8_t * pixels);
 #endif

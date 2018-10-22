@@ -5,6 +5,8 @@
 #include "matrix.h"
 #include "irq.h"
 
-uint
+extern uint8_t * frame;
+
+void serial_init(void);
 
 #endif
