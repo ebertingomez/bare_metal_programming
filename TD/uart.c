@@ -5,12 +5,13 @@
 the serial port. */
 
 /* Initialization of all the registers related to the serial port USART1 */
-void uart_init()
+void uart_init(int baudrate)
 {
     /* Clocks initialization ; PCLK=80MHz*/
     SET_BIT(RCC->APB2ENR, RCC_APB2ENR_USART1EN);
     CLEAR_BIT(RCC->CCIPR, RCC_CCIPR_USART1SEL);
     /* TX/RX pins initialization*/
+    SET_BIT(RCC->AHB2ENR, RCC_AHB2ENR_GPIOBEN);
     MODIFY_REG(GPIOB->MODER, GPIO_MODER_MODE6_Msk, GPIO_MODER_MODE6_1);
     MODIFY_REG(GPIOB->MODER, GPIO_MODER_MODE7_Msk, GPIO_MODER_MODE7_1);
     /* Selection of USART as the function for TX/RX*/
@@ -22,14 +23,14 @@ void uart_init()
     /* Disable of USART1 for setting the parameters of the serial port*/
     CLEAR_BIT(USART1->CR1, USART_CR1_UE);
     /* Setting up the serial port speed */
-    WRITE_REG(USART1->BRR, 694);
+    WRITE_REG(USART1->BRR, (uint16_t)(80000000/baudrate));
     /* Setting up and activation of the serial port (8N1 with oversampling of 16) */
     WRITE_REG(USART1->CR1, 0);
     WRITE_REG(USART1->CR2, 0);
     USART1->CR1 |= USART_CR1_TE | USART_CR1_RE | USART_CR1_UE;
 }
 /* Print a 8bit word through the serial port*/
-static void uart_putchar(uint8_t c)
+void uart_putchar(uint8_t c)
 {
 
     while (READ_BIT(USART1->ISR, USART_ISR_TXE) == 0)
@@ -38,7 +39,7 @@ static void uart_putchar(uint8_t c)
     WRITE_REG(USART1->TDR, c);
 }
 /* Read a 8bit value from the serial port */
-static uint8_t uart_getchar()
+uint8_t uart_getchar()
 {
     while (READ_BIT(USART1->ISR, USART_ISR_RXNE) == 0)
     {

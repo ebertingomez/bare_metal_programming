@@ -1,6 +1,6 @@
 # Serial connection
 SERIALCLIENT = picocom 
-SERIALTAGS = -b 115200 -f n -p n -d 8 --omap crlf /dev/tty.usbmodem000770868477
+SERIALTAGS = -b 38400 -f n -p n -d 8 --omap crlf /dev/cu.usbmodem000770868477
 # Board related tags and debugging
 DRIVER = JLinkGDBServer  
 DRIVER_TAGS = -endian little -if SWD -speed auto -ir -LocalhostOnly
@@ -18,7 +18,7 @@ ASFLAGS = -mthumb -mcpu=cortex-m4 -mfloat-abi=hard -mfpu=fpv4-sp-d16
 LDFLAGS = -T
 LOADLIBES = ld_ram.lds 
 # Objects to be created
-OBJS = main.o crt0.o init.o led.o uart.o matrix.o image.o irq.o buttons.o
+OBJS = main.o crt0.o init.o uart.o matrix.o irq.o led_irq_uart.o
 CLOCK = clocks.o
 EXE = main
 #Convert the format of a file from binary to elf

@@ -6,7 +6,10 @@
 the serial port. */
 
 /* Initialization of all the registers related to the serial port USART1 */
-void uart_init(void);
+void uart_init(int baudrate);
+/* Read a 8bit value from the serial port */
+uint8_t uart_getchar();
+void uart_putchar(uint8_t c);
 /* Print a sequence of characters through the serial port followed by a 
 new line character '\n'. It is equivalent to puts*/
 void uart_puts(const uint8_t *s);
