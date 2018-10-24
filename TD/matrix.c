@@ -281,8 +281,8 @@ void read_print_pixels(uint8_t * pixels)
                 p++;
                 row[j].b = *p;
                 p++;
-                mat_set_row(7 - i, row);
             }
+            mat_set_row(7 - i, row);
         }
     }
 }
