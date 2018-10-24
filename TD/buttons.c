@@ -4,6 +4,9 @@
 #include "led.h"
 #include <stdint.h>
 
+/* This file provides a set of functions to trigger an interruption by pressing a button and handle it */
+
+/* Initialization of the USER button as an interruption trigger */
 void button_init()
 {
     SET_BIT(RCC->AHB2ENR, RCC_AHB2ENR_GPIOCEN);
@@ -16,6 +19,7 @@ void button_init()
     led(LED_OFF);
 }
 
+/* Function called when the button interruption is triggered. It overwrites the one set by default */
 void EXTI15_10_IRQHandler()
 {
     SET_BIT(EXTI->PR1, EXTI_PR1_PIF13);

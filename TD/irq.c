@@ -3,7 +3,11 @@
 #include "stm32l4xx.h"
 #include "stm32l475xx.h"
 
+/* This file provides a set of functions to initialize the interrruption handlers and to set the
+interruption vector the right address*/
+
 extern uint32_t stack;
+/* This macro sets a default behaviour for all the exceptions */
 #define MAKE_DEFAULT_HANDLER(HANDLER)         \
     void __attribute__((weak))(HANDLER)(void) \
     {                                         \
@@ -14,7 +18,7 @@ extern uint32_t stack;
     }
 
 void __attribute__((weak)) _start(void);
-/******  Cortex-M4 Processor Exceptions Numbers ***************************************************************/
+/******  Cortex-M4 Processor Exceptions Handler Initialization ***************************************************************/
 MAKE_DEFAULT_HANDLER(NonMaskableInt_IRQHandler);
 MAKE_DEFAULT_HANDLER(HardFault_IRQHandler);
 MAKE_DEFAULT_HANDLER(MemoryManagement_IRQHandler);
@@ -24,7 +28,7 @@ MAKE_DEFAULT_HANDLER(SVCall_IRQHandler);
 MAKE_DEFAULT_HANDLER(DebugMonitor_IRQHandler);
 MAKE_DEFAULT_HANDLER(PendSV_IRQHandler);
 MAKE_DEFAULT_HANDLER(SysTick_IRQHandler);
-/******  STM32 specific Interrupt Numbers *********************************************************************/
+/******  STM32 specific Interrupt Handler Initialization *********************************************************************/
 MAKE_DEFAULT_HANDLER(WWDG_IRQHandler);
 MAKE_DEFAULT_HANDLER(PVD_PVM_IRQHandler);
 MAKE_DEFAULT_HANDLER(TAMP_STAMP_IRQHandler);
@@ -106,6 +110,7 @@ MAKE_DEFAULT_HANDLER(TSC_IRQHandler);
 MAKE_DEFAULT_HANDLER(RNG_IRQHandler);
 MAKE_DEFAULT_HANDLER(FPU_IRQHandler);
 
+/**** Exception Vector ****/
 static void __attribute__((aligned(512))) * vector_table[] = {
     /* Stack and Reset Handler */
     &stack,                        /* Top of stack */
@@ -208,6 +213,8 @@ static void __attribute__((aligned(512))) * vector_table[] = {
     FPU_IRQHandler                 /*!< FPU global interrupt                */
 };
 
-void irq_init(){
-    WRITE_REG(SCB->VTOR, (uint32_t) vector_table);
+/* Intialization of the exception vector address */
+void irq_init()
+{
+    WRITE_REG(SCB->VTOR, (uint32_t)vector_table);
 }
