@@ -2,27 +2,32 @@
 #include "stm32l475xx.h"
 #include "stm32l4xx.h"
 
-uint8_t array[192];
+static uint8_t array[192];
+static int counter=0;
+static uint8_t byte;
 uint8_t * frame = array;
+
+void EXTI9_5_IRQHandler(void);
 
 void serial_init()
 {
-    uart_init(38400);
-    SET_BIT(EXTI->IMR1, EXTI_IMR1_IM26);
-    SET_BIT(EXTI->FTSR1, EXTI_FTSR1_FT13);
-    NVIC_EnableIRQ(44);
+    SET_BIT(EXTI->IMR1, EXTI_IMR1_IM7);
+    SET_BIT(EXTI->FTSR1, EXTI_FTSR1_FT7);
+    MODIFY_REG(SYSCFG->EXTICR[1], SYSCFG_EXTICR2_EXTI7_Msk, SYSCFG_EXTICR2_EXTI7_PB);
+    NVIC_EnableIRQ(23);
 }
 
-void USART1_IRQHandler()
+void EXTI9_5_IRQHandler()
 {
-    uint8_t byte = uart_getchar();
-    if (byte == 0xFF)
+    byte = uart_getchar();
+    SET_BIT(EXTI->PR1, EXTI_PR1_PIF7);
+    if (byte == (uint8_t)0xFF || counter==192)
     {
-        frame = array;
+        counter=0;
     }
     else
     {
-        *frame = byte;
-        frame++;
+        array[counter] = byte;
+        counter++;
     }
 }

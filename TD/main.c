@@ -11,12 +11,10 @@ int fibo(int i);
 int main()
 {
   clocks_init();
-  irq_init();
+  uart_init(38400);
   serial_init();
-  while (1)
-  {
-    //read_print_pixels(frame);
-  }
+  irq_init();
+  read_print_pixels(frame);
   return 0;
 }
 /* This function let to calculate a fibonacci number based on recursivity*/

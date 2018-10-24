@@ -1,6 +1,6 @@
 # Serial connection
 SERIALCLIENT = picocom 
-SERIALTAGS = -b 115200 -f n -p n -d 8 --omap crlf /dev/tty.usbmodem000770868477
+SERIALTAGS = -b 38400 -f n -p n -d 8 --omap crlf /dev/cu.usbmodem000770868477
 # Board related tags and debugging
 DRIVER = JLinkGDBServer  
 DRIVER_TAGS = -endian little -if SWD -speed auto -ir -LocalhostOnly

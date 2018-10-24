@@ -265,11 +265,12 @@ void test_pixels()
 void read_print_pixels(uint8_t * pixels)
 {
     rgb_color row[ROW_NUMBER];
-    uint8_t *p = pixels;
+    uint8_t * ref_pixels = pixels;
+    uint8_t * p;
     matrix_init();
     while (1)
     {
-        p = pixels;
+        p = ref_pixels;
         for (int i = 0; i < ROW_NUMBER; i++)
         {
             for (int j = 0; j < COLUMN_NUMBER; j++)
@@ -280,8 +281,8 @@ void read_print_pixels(uint8_t * pixels)
                 p++;
                 row[j].b = *p;
                 p++;
+                mat_set_row(7 - i, row);
             }
-            mat_set_row(7 - i, row);
         }
     }
 }
