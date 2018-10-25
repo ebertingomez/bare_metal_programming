@@ -23,16 +23,15 @@ void uart_init(int baudrate)
     /* Disable of USART1 for setting the parameters of the serial port*/
     CLEAR_BIT(USART1->CR1, USART_CR1_UE);
     /* Setting up the serial port speed */
-    WRITE_REG(USART1->BRR, (uint16_t)(80000000/baudrate));
+    WRITE_REG(USART1->BRR, (uint16_t)(80000000 / baudrate));
     /* Setting up and activation of the serial port (8N1 with oversampling of 16) */
     WRITE_REG(USART1->CR1, 0);
     WRITE_REG(USART1->CR2, 0);
     USART1->CR1 |= USART_CR1_TE | USART_CR1_RE | USART_CR1_UE;
 }
 /* Print a 8bit word through the serial port*/
-void uart_putchar(uint8_t c)
+static void uart_putchar(uint8_t c)
 {
-
     while (READ_BIT(USART1->ISR, USART_ISR_TXE) == 0)
     {
     }
@@ -41,8 +40,23 @@ void uart_putchar(uint8_t c)
 /* Read a 8bit value from the serial port */
 uint8_t uart_getchar()
 {
-    while (READ_BIT(USART1->ISR, USART_ISR_RXNE) == 0)
+    /* Check if a byte was received or if there was an error */
+    while (!READ_BIT(USART1->ISR, USART_ISR_RXNE) ||
+           READ_BIT(USART1->ISR, USART_ISR_FE) ||
+           READ_BIT(USART1->ISR, USART_ISR_ORE))
     {
+        /* If overrun error */
+        if (READ_BIT(USART1->ISR, USART_ISR_ORE))
+        {
+            READ_REG(USART1->RDR);
+            SET_BIT(USART1->ICR, USART_ICR_ORECF);
+        }
+        /* If framing error */
+        else if (READ_BIT(USART1->ISR, USART_ISR_FE))
+        {
+            READ_REG(USART1->RDR);
+            SET_BIT(USART1->ICR, USART_ICR_FECF);
+        }
     }
     return READ_REG(USART1->RDR);
 }
