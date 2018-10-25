@@ -8,7 +8,7 @@ DEVICE = -device STM32L475VG
 DEBUGGER = arm-none-eabi-gdb
 #Compiling
 CC = arm-none-eabi-gcc -nostdlib -Wall -Wextra -Werror
-CFLAGS = -g -O2 -std=gnu99 -iquoteCMSIS/Device/ST/STM32L4xx/Include -iquoteCMSIS/Include
+CFLAGS = -g -O1 -std=gnu99 -iquoteCMSIS/Device/ST/STM32L4xx/Include -iquoteCMSIS/Include
 CPPFLAGS += -DSTM32L475xx
 TARGET_ARCH = -mcpu=cortex-m4 -mthumb  -mfloat-abi=hard -mfpu=fpv4-sp-d16
 #Assembling
@@ -18,8 +18,7 @@ ASFLAGS = -mthumb -mcpu=cortex-m4 -mfloat-abi=hard -mfpu=fpv4-sp-d16
 LDFLAGS = -T
 LOADLIBES = ld_ram.lds 
 # Objects to be created
-OBJS = main.o crt0.o init.o uart.o matrix.o irq.o led_irq_uart.o
-CLOCK = clocks.o
+OBJS = main.o crt0.o init.o uart.o matrix.o irq.o led_irq_uart.o clocks.o
 EXE = main
 #Convert the format of a file from binary to elf
 CONVERTER = arm-none-eabi-objcopy
@@ -29,7 +28,7 @@ VPATH = CMSIS/Device/ST/STM32L4xx/Include CMSIS/Include
 
 all : $(EXE) 
 
-$(EXE) : $(LOADLIBES) $(OBJS) $(CLOCK)
+$(EXE) : $(LOADLIBES) $(OBJS)
 	$(CC) $(LDFLAGS) $^ -o $@
 
 %.o : %.raw
