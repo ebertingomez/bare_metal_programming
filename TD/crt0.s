@@ -6,6 +6,9 @@
     a executable. It set the stack pointer and calls a function to empty the bss. */
 _start:
  LDR sp,=stack
+ BL init_arm
+ BL init_text
+ BL init_data
  BL init_bss
  BL main
  BL _end

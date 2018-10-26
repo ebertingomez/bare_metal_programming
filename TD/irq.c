@@ -1,12 +1,13 @@
-#include "irq.h"
 #include <stdint.h>
 #include "stm32l4xx.h"
 #include "stm32l475xx.h"
+#include "clocks.h"
+#include "led_irq_uart.h"
 
 /* This file provides a set of functions to initialize the interrruption handlers and to set the
 interruption vector the right address*/
 
-extern uint32_t stack;
+extern uint32_t stack, _origin;
 /* This macro sets a default behaviour for all the exceptions */
 #define MAKE_DEFAULT_HANDLER(HANDLER)         \
     void __attribute__((weak))(HANDLER)(void) \
@@ -17,7 +18,6 @@ extern uint32_t stack;
         }                                     \
     }
 
-void __attribute__((weak)) _start(void);
 /******  Cortex-M4 Processor Exceptions Handler Initialization ***************************************************************/
 MAKE_DEFAULT_HANDLER(NonMaskableInt_IRQHandler);
 MAKE_DEFAULT_HANDLER(HardFault_IRQHandler);
@@ -111,7 +111,7 @@ MAKE_DEFAULT_HANDLER(RNG_IRQHandler);
 MAKE_DEFAULT_HANDLER(FPU_IRQHandler);
 
 /**** Exception Vector ****/
-static void __attribute__((aligned(512))) * vector_table[] = {
+static void __attribute__((section(".arm"))) * vector_table[] = {
     /* Stack and Reset Handler */
     &stack,                        /* Top of stack */
     _start,                        /* Reset handler */

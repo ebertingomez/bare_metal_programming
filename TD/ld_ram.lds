@@ -5,23 +5,35 @@ MEMORY
 	  sdram2 (wx) : ORIGIN = 0x10000000, LENGTH = 32K
 	  
 	}
-
 stack = ORIGIN(sdram2) + LENGTH(sdram2) ;
 
 SECTIONS {
+	_astartROM = . ;
+	.arm : {
+		_astartRAM =  . ;
+		*(.arm*)
+		_aendRAM = . ; 
+} > sdram1 AT > flash
+
+	_tstartROM = . ;
 	.text : {
+		_tstartRAM =  . ;
 		*(.text*)
-} > sdram1
+		_tendRAM = . ;  
+} > sdram1 AT > flash
 	 
 	.rodata : {
 		*(.rodata*)
-} > sdram1
+} > flash
 		
+	_dstartROM = . ;
 	.data : {
-	  	*(.data*)      
-} > sdram1
-		
-	.bss : {
+		_dstartRAM =  . ;
+	  	*(.data*)   
+		_dendRAM = . ;   
+} > sdram1 AT > flash
+
+	.bss _dendRAM : {
 		_bstart =  . ;
 		*(.bss*)
 		*(*COM*)
