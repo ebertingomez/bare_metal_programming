@@ -6,7 +6,8 @@ port and handle it */
 
 /* This array will store all the bytes received by the serial port*/
 static uint8_t array[192];
-static int counter=0;
+static int counter = 0;
+static int frame_beginning = 0;
 static uint8_t byte;
 /* Pointer to the  beginning of the array which will contain all the bytes received */
 uint8_t * frame = array;
@@ -14,6 +15,7 @@ uint8_t * frame = array;
 /* Initialization of the serial port as an interruption trigger*/
 void serial_init()
 {
+    frame = array;
     SET_BIT(EXTI->IMR1, EXTI_IMR1_IM7);
     SET_BIT(EXTI->FTSR1, EXTI_FTSR1_FT7);
     MODIFY_REG(SYSCFG->EXTICR[1], SYSCFG_EXTICR2_EXTI7_Msk, SYSCFG_EXTICR2_EXTI7_PB);
@@ -26,13 +28,16 @@ void EXTI9_5_IRQHandler()
 {
     byte = uart_getchar();
     SET_BIT(EXTI->PR1, EXTI_PR1_PIF7);
-    if (byte == (uint8_t)0xFF || counter==192)
+    if (byte == (uint8_t)0xFF || counter == 192)
     {
+        frame_beginning = (byte == 0xFF) ? 1 : 0; 
         counter=0;
     }
     else
     {
-        array[counter] = byte;
-        counter++;
+        if (frame_beginning){
+            array[counter] = byte;
+            counter++;
+        }
     }
 }

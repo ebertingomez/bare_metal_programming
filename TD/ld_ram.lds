@@ -8,32 +8,37 @@ MEMORY
 stack = ORIGIN(sdram2) + LENGTH(sdram2) ;
 
 SECTIONS {
-	_astartROM = . ;
 	.arm : {
 		_astartRAM =  . ;
 		*(.arm*)
 		_aendRAM = . ; 
 } > sdram1 AT > flash
+	_astartROM = LOADADDR(.arm) ;
 
-	_tstartROM = . ;
+	.init : {
+		crt0.o (.text*);
+		init.o (.text*);
+	} > flash
+
 	.text : {
 		_tstartRAM =  . ;
 		*(.text*)
 		_tendRAM = . ;  
 } > sdram1 AT > flash
+	_tstartROM = LOADADDR(.text) ;
 	 
 	.rodata : {
 		*(.rodata*)
 } > flash
 		
-	_dstartROM = . ;
-	.data : {
+	.data  : {
 		_dstartRAM =  . ;
 	  	*(.data*)   
 		_dendRAM = . ;   
 } > sdram1 AT > flash
+	_dstartROM = LOADADDR(.data) ;
 
-	.bss _dendRAM : {
+	.bss  : {
 		_bstart =  . ;
 		*(.bss*)
 		*(*COM*)

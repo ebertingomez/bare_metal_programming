@@ -7,7 +7,7 @@
 /* This file provides a set of functions to initialize the interrruption handlers and to set the
 interruption vector the right address*/
 
-extern uint32_t stack, _origin;
+extern uint32_t stack;
 /* This macro sets a default behaviour for all the exceptions */
 #define MAKE_DEFAULT_HANDLER(HANDLER)         \
     void __attribute__((weak))(HANDLER)(void) \
@@ -18,6 +18,7 @@ extern uint32_t stack, _origin;
         }                                     \
     }
 
+void __attribute__((weak)) _start(void);
 /******  Cortex-M4 Processor Exceptions Handler Initialization ***************************************************************/
 MAKE_DEFAULT_HANDLER(NonMaskableInt_IRQHandler);
 MAKE_DEFAULT_HANDLER(HardFault_IRQHandler);
