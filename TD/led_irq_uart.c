@@ -5,7 +5,7 @@
 port and handle it */
 
 /* This array will store all the bytes received by the serial port*/
-static uint8_t array[192];
+volatile static uint8_t array[192];
 static int counter = 0;
 /* Boolean variable to test if 0xFF was received */ 
 static int frame_beginning = 0;
