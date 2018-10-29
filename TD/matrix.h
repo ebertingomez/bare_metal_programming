@@ -3,6 +3,9 @@
 #include <stdint.h>
 #include <stddef.h>
 
+/* This file provides a set of function to initialize and control all the 
+LEDs from a matrix. To test it, please call the function test_pixels() */
+
 /* Test if the configuration is correct. It shows a sequence of red rows, then a red sequence
 and a blue sequence of rows  */
 void test_pixels(void);

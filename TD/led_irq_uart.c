@@ -7,12 +7,13 @@ port and handle it */
 /* This array will store all the bytes received by the serial port*/
 static uint8_t array[192];
 static int counter = 0;
+/* Boolean variable to test if 0xFF was received */ 
 static int frame_beginning = 0;
 static uint8_t byte;
 /* Pointer to the  beginning of the array which will contain all the bytes received */
 uint8_t * frame = array;
 
-/* Initialization of the serial port as an interruption trigger*/
+/* Initialization of the serial port as an interruption trigger */
 void serial_init()
 {
     frame = array;
